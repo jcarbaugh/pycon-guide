@@ -1,0 +1,4 @@
+domain: https://pycon.guide
+heroku:
+  staging: pycon-guide-staging
+  production: pycon-guide

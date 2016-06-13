@@ -1,0 +1,59 @@
+// Header and Navigation styles
+
+.header {
+    background-color: $darkblue;
+    padding: 1rem;
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+}
+
+// Admin Flag
+.header__flag {
+    padding: 4rem 4rem .25rem;
+    background: #fff;
+    display: inline-block;
+    position: absolute;
+    top: -3.25rem;
+    left: -5.25rem;
+    transform: rotate(-40deg);
+    font-size: .5rem;
+    background-color: rgba(0,0,0,.25);
+    text-transform: uppercase;
+    color: #479eb0;
+    text-decoration: none;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+
+    @include breakpoint(medium) {
+        justify-content: flex-end;
+    }
+}
+
+.navigation__link {
+    border-radius: 0.2em;
+    border: 1px solid $white;
+    color: $white;
+    display: inline-block;
+    font-family: $vinyl;
+    font-size: .8rem;
+    letter-spacing: 1px;
+    padding: .5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 200ms;
+
+    &:hover,
+    &:focus {
+        background: $white;
+        color: $darkblue;
+    }
+
+    & + & {
+        margin-left: 1rem;
+    }
+}

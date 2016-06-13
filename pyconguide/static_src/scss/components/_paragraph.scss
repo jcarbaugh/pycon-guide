@@ -1,0 +1,41 @@
+.paragraph {
+    font-family: $vinyl;
+    text-align: center;
+    font-size: 1.8em;
+    margin-top: 5.5em;
+}
+
+.paragraph__text {
+    color: $white;
+    position: relative;
+
+    a {
+        color: $floralwhite;
+    }
+
+    &::before {
+        content: "";
+        width: 20px;
+        height: 19px;
+        display: block;
+        background-image: url("../img/star.png");
+        background-size: 10px 9.5px;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: -20px;
+        left: 48.8%;
+    }
+
+    &::after {
+        content: "";
+        width: 20px;
+        height: 19px;
+        display: block;
+        background-image: url("../img/star.png");
+        background-size: 10px 9.5px;
+        background-repeat: no-repeat;
+        position: absolute;
+        bottom: -30px;
+        left: 48.8%;
+    }
+}

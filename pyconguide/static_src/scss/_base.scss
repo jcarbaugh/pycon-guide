@@ -1,0 +1,55 @@
+html {
+    background-size: cover;
+}
+
+.html--splash {
+    background: url("../img/background_splash.jpg") no-repeat center center fixed;
+}
+
+.html--app {
+    background-color: #286874;
+    background: url("../img/background_app.jpg") no-repeat center center fixed;
+}
+
+@include breakpoint(small down) {
+
+    .html--splash {
+        background: url("../img/background_splash.jpg") no-repeat center left fixed;
+    }
+}
+
+body {
+    background-color: transparent;
+    font-size: 62.5%;
+}
+
+.guide {
+    margin-top: 10em;
+}
+
+.logo {
+    margin: 0;
+    text-align: center;
+
+    svg {
+        width: 100%;
+        max-width: 10rem;
+        fill: $white;
+    }
+
+    @include breakpoint(medium) {
+        text-align: left;
+    }
+}
+
+.main {
+    padding: 1rem;
+}
+
+.html--app .main {
+    background: #286874 url("../img/background_app.jpg") no-repeat center center fixed;
+}
+
+.footer {
+    padding-bottom: 2rem;
+}

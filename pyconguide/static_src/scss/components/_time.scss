@@ -1,0 +1,45 @@
+.date {
+    font-family: $vinyl;
+    text-rendering: optimizeLegibility;
+    color: $white;
+    text-transform: uppercase;
+    font-size: 2em;
+    margin-bottom: 4.5em;
+}
+
+.date__large {
+    height: 3px;
+    width: 200px;
+    box-shadow: 0 55px 0 0 $white;
+    border-radius: 10px;
+    font-weight: normal;
+}
+
+.date__space {
+    margin-top: 1.3em;
+    // transform: translateX(-10%);
+}
+
+.date__bottom {
+    margin-bottom: 2.5em;
+}
+
+.date__line {
+    border-top: 2px solid $darkblue;
+    width: 99%;
+    transform: translateX(3%);
+    margin-top: 5em;
+}
+
+.time {
+    color: $lightblue;
+    font-family: $vinyl;
+}
+
+.time--rest {
+ margin-top: 6em;
+}
+
+.time__number {
+    font-weight: normal;
+}

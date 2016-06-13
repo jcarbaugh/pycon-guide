@@ -1,0 +1,226 @@
+// Presentation Card Styles
+
+
+// Set overall card heights
+$card-height: rem-calc(300);
+$card-height-large: rem-calc(350);
+
+$card-padding: 1.5rem;
+
+.card-container,
+.card,
+.card__face {
+    height: $card-height;
+
+    // 0 - 375
+    @media (max-width: 414px) {
+        height: $card-height-large;
+    }
+
+    // 640 - 825
+    @media (min-width: 640px) and (max-width: 825px) {
+        height: $card-height-large;
+    }
+}
+
+
+// Card wrapper to provide 3d perspective space
+.card-container {
+    margin-bottom: 2rem;
+    perspective: 800px;
+    position: relative;
+    width: 100%;
+}
+
+
+.card {
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 800ms;
+    width: 100%;
+
+    &.is-flipped {
+        transform: rotateY(180deg);
+    }
+
+    &.is-selected {
+        .card__face {
+            background-color: #fff;
+            color: $darkblue;
+        }
+
+        .card__description:after {
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 90%);
+        }
+        .card__link {
+            :hover {
+                color: $tiber;
+            }
+        }
+    }
+}
+
+.card__face {
+    backface-visibility: hidden;
+    position: absolute;
+    background-color: rgba(71,158,176,1);
+    border-radius: 5px;
+    transform-style: preserve-3d;
+    padding: $card-padding;
+    width: 100%;
+    box-shadow: .5rem .5rem 1rem -1rem rgba(0,0,0,.5);
+    transition: background-color 200ms, box-shadow 200ms;
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: .75rem .75rem 1.5rem -1rem rgba(0,0,0,.7);
+    }
+
+    &.card__face--front {}
+
+    &.card__face--back {
+        transform: rotateY(180deg);
+    }
+}
+
+.card__header {
+    font-family: $vinyl;
+    font-size: 1.5rem;
+    font-weight: normal;
+    line-height: 1.2em;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.card__speakers {
+    font-family: $vinyl;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1.2em;
+    margin-bottom: 1rem;
+    margin-top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-button {
+    background-color: transparent;
+    border-radius: 3px;
+    border: 2px solid $darkblue;
+    bottom: $card-padding;
+    color: $darkblue;
+    display: block;
+    font-size: .75rem;
+    padding: .5rem 1rem;
+    position: absolute;
+    right: $card-padding;
+    text-decoration: none;
+    transition: background-color 200ms;
+
+    &:hover,
+    &.is-selected {
+        background-color: $darkblue;
+        color: $white;
+    }
+}
+
+
+.card__description {
+    font-size: .9rem;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+
+    &:after {
+        background: linear-gradient(to bottom, rgba(71,158,176,0) 0%,rgba(71,158,176,1) 90%);
+        bottom: 0;
+        content: '';
+        display: block;
+        height: 50px;
+        position: absolute;
+        width: 100%;
+    }
+}
+
+.card__link {
+    bottom: $card-padding;
+    color: $darkblue;
+    font-size: .8rem;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100% - #{$card-padding *2 });
+
+    a {
+        color: $darkblue;
+        font-size: .8rem;
+        text-decoration: none;
+
+    }
+
+    :hover {
+        color: $floralwhite;
+    }
+}
+
+
+
+
+// TODO: refactor card__list
+
+.card__list {
+    color: $black;
+    list-style-type: none;
+    margin: 0 0 0 1.5em;
+    padding: 0;
+    font-family: $adelle;
+    font-size: 1.6em;
+}
+
+
+.card__listitem {
+    position: relative;
+    margin-bottom: 0.7em;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url("../img/icons/clock.svg");
+            background-size: 17px 17px;
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 3px;
+            left: -23px;
+        }
+}
+
+.card__listitem--2 {
+
+    &::before {
+        content: '';
+        background-image: url("../img/icons/book.svg");
+    }
+}
+
+
+.card__listitem--3 {
+
+    &::before {
+        background-size: 15px 15px;
+        content: '';
+        background-image: url("../img/icons/stats.svg");
+    }
+}
+
+
+.card__listitem--4 {
+
+    &::before {
+        content: '';
+        background-image: url("../img/icons/location.svg");
+    }
+}

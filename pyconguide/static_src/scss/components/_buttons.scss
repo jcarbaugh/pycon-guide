@@ -1,0 +1,19 @@
+.button {
+    display: inline-block;
+    margin-top: 9.5em;
+}
+
+.button--login {
+    width: 608px;
+    height: 57px;
+    background-image: url("../img/button_sprite.png"); 
+    background-size: 304px 114px;
+    background-repeat: no-repeat;
+    background-position: center 4%;
+    transition: 0.2s;
+
+        &:hover {
+            background-position: center 7%;
+            cursor: pointer;
+        }
+}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load tz %}
+
+{% block htmlclass %}html--app{% endblock %}
+
+{% block content %}
+
+{% include 'partials/header.html' %}
+
+<main class="main">
+    <section class="guide">
+        {% regroup presentation_list by local_start_time.date as presentation_dates %}
+        {% for presentation_date in presentation_dates %}
+        <div class="row">
+            <div class="small-12 column">
+                <div class="date date__bottom">
+                    <h1 class="date__large date__space">
+                        {{ presentation_date.grouper }}
+                    </h1>
+                </div>
+            </div>
+        </div>
+        {% regroup presentation_date.list by local_start_time as presentation_times %}
+        {% for presentation_time in presentation_times %}
+        <div class="row">
+            <div class="small-12 column">
+                <div class="time">
+                    <h1 class="time__number">{{ presentation_time.grouper.time }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 column">
+                <div class="row">
+                    {% for presentation in presentation_time.list %}
+                    <div class="small-12 medium-6 column">
+                        <div class="card-container">
+                            <div class="card {% if presentation.presentation_id in interested_in %}is-selected{% endif %}">
+                                <div class="card__face card__face--front">
+                                    <h1 class="card__header">
+                                        {{ presentation.title }}
+                                    </h1>
+
+                                    <ul class="card__list">
+                                        <li class="card__listitem">{{ presentation.duration_minutes }} minutes</li>
+                                        <li class="card__listitem card__listitem--2">{{ presentation.category }}</li>
+                                        <li class="card__listitem card__listitem--3">{{ presentation.audience }}</li>
+                                        <li class="card__listitem card__listitem--4">{{ presentation.room }}</li>
+                                    </ul>
+                                    <a class="card-button float-right js-select {% if presentation.presentation_id in interested_in %}is-selected{% endif %}"
+                                        data-presentation-id="{{ presentation.presentation_id }}"
+                                        data-selected="{% if presentation.presentation_id in interested_in %}true{% else %}false{% endif %}">
+                                    {% if presentation.presentation_id in interested_in %}
+                                        Remove from Calendar
+                                    {% else %}
+                                        Add to Calendar
+                                    {% endif %}
+                                    </a>
+                                </div>
+                                <div class="card__face card__face--back">
+                                    <h1 class="card__header">
+                                        {{ presentation.title }}
+                                    </h1>
+                                    <div class="card__speakers">
+                                        {{ presentation.speakers }}
+                                    </div>
+                                    <div class="card__description">{{ presentation.description }}</div>
+                                    <div class="card__link">
+                                        Read More:
+                                        <a class="" href="{{ presentation.url }}">{{ presentation.url }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </section>
+    <footer class="footer">
+        <div class="row align-center">
+            <a href="https://isl.co" class="link link--footer">Made by ISL in Washington, DC</a>
+        </div>
+    </footer>
+</main>
+
+{% endblock %}

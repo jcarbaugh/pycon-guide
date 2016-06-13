@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block htmlclass %}html--splash{% endblock %}
+
+{% block content %}
+<main class="main">
+
+    <div class="row align-center">
+        <div class="small-10 medium-6 large-4 column">
+            <header class="title">
+                <h1>
+                    <img src="{% static 'img/title.png' %}" width="100%">
+                </h1>
+            </header>
+        </div>
+    </div>
+
+    <div class="row align-center">
+        <div class="small-11 medium-6 large-4 column">
+            <div class="paragraph">
+                <p class="paragraph__text">
+                    PyCon Guide is your personal <a href="https://us.pycon.org/2016/">PyCon</a> planner: peruse scheduled talks and add favorites to your calendar. Click the cards to see more info. Subscribe to the calendar using your preferred app and you'll be conference-ing in style!
+                    <br><br>
+                    Like PyCon Guide? We'd love to meet up at PyCon! Follow us <a href="https://twitter.com/istrategylabs">@istrategylabs</a> and get in touch.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-center">
+        <a href="{% url 'social:begin' 'github' %}" class="button button--login">
+            <span class="show-for-sr">Login with github</span>
+        </a>
+    </div>
+
+    <footer>
+        <div class="row align-center">
+            <a href="https://isl.co" class="link link--footer">Made by ISL in Washington, DC</a>
+        </div>
+    </footer>
+
+</main>
+{% endblock %}

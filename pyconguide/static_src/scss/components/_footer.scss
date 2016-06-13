@@ -1,0 +1,49 @@
+.link {
+    text-decoration: none;
+}
+
+.link--footer {
+    color: $floralwhite;
+    font-family: adelle;
+    font-size: 1.4em;
+    position: relative;
+    margin-top: 5em;
+    text-decoration-color: $floralwhite;
+
+    &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1.5px;
+            width: 0;
+            background-color: $tiber;
+            transition: 150ms all ease-in-out;
+    }
+
+    &:hover {
+
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1.5px;
+            width: 100%;
+            background-color: $tiber;
+            transition: 150ms all ease-in-out;
+        }
+    }
+}
+
+.html--app {
+    .link--footer {
+        margin-top: 2em;
+    }
+}
+
+@include breakpoint(small only) {
+    .link--footer {
+        margin-top: 7em;
+    }
+}

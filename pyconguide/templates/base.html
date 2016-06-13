@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en" class="{% block htmlclass %}{% endblock %}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>PyCon Guide</title>
+        <meta name="description" content="Make your own PyCon guide and subscribe to a custom calendar. Made by ISL in Washington, DC.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon-precomposed" href="/favicon-152.png">
+
+        {# Facebook Open Graph Tags #}
+        <meta property="og:title" content="PyCon Guide" />
+        <meta property="og:site_name" content="PyCon Guide" />
+        <meta property="og:url" content="https://pycon.guide" />
+        <meta property="og:description" content="Make your own PyCon guide and subscribe to a custom calendar. Made by ISL in Washington, DC." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://pycon.guide{% static 'img/share-facebook.jpg' %}" />
+
+        {# Twitter Summary Card with Large Image tags #}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="PyCon Guide">
+        <meta name="twitter:creator" content="ISL">
+        <meta name="twitter:title" content="PyCon Guide">
+        <meta name="twitter:description" content="Make your own PyCon guide and subscribe to a custom calendar. Made by ISL in Washington, DC.">
+        <meta name="twitter:image" content="https://pycon.guide{% static 'img/share-twitter.jpg' %}">
+
+        <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+        {% if request.session.session_key %}
+        <script>var wsSessionKey = '{{ request.session.session_key }}';</script>
+        {% endif %}
+        <script src="{% static 'js/bundle.js' %}" async defer></script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-188736-44', 'auto');
+            {% if request.session.session_key and request.path == '/' %}
+            ga('send', 'pageview', '/presentations/');
+            {% else %}
+            ga('send', 'pageview');
+            {% endif %}
+        </script>
+    </head>
+    <body>
+
+        {% block content %}{% endblock %}
+
+        {% block js %}{% endblock %}
+
+        {% comment %}
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "Organization",
+                "name": "",
+                "url": "",
+                "logo": "",
+            }
+        </script>
+        {% endcomment %}
+    </body>
+</html>
