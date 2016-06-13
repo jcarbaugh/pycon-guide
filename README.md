@@ -3,6 +3,8 @@
 Browse PyCon sessions and add them to your calendar. Subscribe using your
 favorite calendar app.
 
+Built with [mo-django](https://github.com/istrategylabs/mo-django), [ISL's](https://isl.co) Django starter kit.
+
 ## Developing
 
 ### Requirements
