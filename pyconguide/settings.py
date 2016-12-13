@@ -25,6 +25,7 @@ SECRET_KEY = config('SECRET_KEY', default='fortheloveofgodthisisnotsecure')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG_TOOLBAR = config('DEBUG_TOOLBAR', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='',
                        cast=lambda v: [s.strip() for s in v.split(',')])
@@ -45,7 +46,7 @@ INSTALLED_APPS = (
     'pyconguide',
 )
 
-if DEBUG:
+if DEBUG and DEBUG_TOOLBAR:
     INSTALLED_APPS += ('debug_toolbar',)
 
 INSTALLED_APPS += ('django_rq',)
