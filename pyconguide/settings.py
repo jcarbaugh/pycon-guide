@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'raven.contrib.django.raven_compat',
-    'social.apps.django_app.default',
+    'social_django',
     'channels',
     'pyconguide',
 )
@@ -156,7 +156,7 @@ if SENTRY_DSN:
 # project configuration
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.github.GithubOAuth2',
+    'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -171,3 +171,5 @@ SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
 
 if not DEBUG:
     SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+
+SOCIAL_AUTH_USER_MODEL = 'auth.User'

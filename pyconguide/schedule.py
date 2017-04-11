@@ -11,18 +11,18 @@ from .models import Presentation, PyCon
 
 
 BASE_URL = 'https://us.pycon.org{}'
-SCHEDULE_URL = BASE_URL.format('/2016/schedule/talks/')
-PRESENTATION_RE = re.compile(r'(/2016/schedule/presentation/(\d+)/)')
+SCHEDULE_URL = BASE_URL.format('/2017/schedule/talks/')
+PRESENTATION_RE = re.compile(r'(/2017/schedule/presentation/(\d+)/)')
 DATES = {
-    'Monday': datetime.date(2016, 5, 30),
-    'Tuesday': datetime.date(2016, 5, 31),
-    'Wednesday': datetime.date(2016, 6, 1),
+    'Friday': datetime.date(2017, 5, 19),
+    'Saturday': datetime.date(2017, 5, 20),
+    'Sunday': datetime.date(2017, 5, 21),
 }
 
 
 http = requests.Session()
 http.headers = {
-    'User-Agent': 'pycon-schedule-parser',
+    'User-Agent': 'pyconguide-bot',
 }
 
 pacific = timezone('America/Los_Angeles')
@@ -54,29 +54,33 @@ def scrape_pycon():
     Presentation.objects.filter(presentation_id__in=to_remove).delete()
 
     for presentation_id in presentation_ids:
-        scrape_presentation.delay(presentation_id)
+        # scrape_presentation.delay(presentation_id)
+        scrape_presentation(presentation_id)
 
     # collect session_id
 
     parser = etree.HTMLParser()
-    doc = etree.fromstring(resp.text, parser)
+    doc = etree.fromstring(resp.text.encode(encoding='utf-8'), parser)
     elems = doc.cssselect('div.badges a[href]')
     session_ids = []
     for elem in elems:
         session_ids.append(elem.attrib['href'][-4:-1])
 
     for session_id in session_ids:
-        scrape_session.delay(session_id)
+        #scrape_session.delay(session_id)
+        scrape_session(session_id)
 
 
 @job
 def scrape_presentation(presentation_id):
 
     url = BASE_URL.format(
-        '/2016/schedule/presentation/{}/'.format(presentation_id))
+        '/2017/schedule/presentation/{}/'.format(presentation_id))
+
+    print(f'scraping {url}')
 
     defaults = {
-        'pycon': PyCon.objects.get(year=2016),
+        'pycon': PyCon.objects.get(year=2017),
         'url': url,
     }
 
@@ -84,7 +88,8 @@ def scrape_presentation(presentation_id):
 
     resp = requests.get(url)
     parser = etree.HTMLParser()
-    doc = etree.fromstring(resp.text, parser)
+
+    doc = etree.fromstring(resp.text.encode(encoding='utf-8'), parser)
 
     elems = doc.cssselect('.box-content h2')
     defaults['title'] = elems[0].text.strip()
@@ -106,14 +111,16 @@ def scrape_presentation(presentation_id):
     defaults['speakers'] = ', '.join(names)
 
     elems = doc.cssselect('.box-content .dl-horizontal dd')
-    defaults['audience'] = elems[0].text.strip()
-    defaults['category'] = elems[1].text.strip()
+    if elems:
+        defaults['audience'] = elems[0].text.strip()
+        defaults['category'] = elems[1].text.strip()
 
     elems = doc.cssselect('.box-content .description')
     defaults['description'] = elems[0].text.strip()
 
     elems = doc.cssselect('.box-content .abstract')
-    defaults['abstract'] = elems[0].text.strip()
+    if elems:
+        defaults['abstract'] = elems[0].text.strip()
 
     Presentation.objects.update_or_create(
         presentation_id=presentation_id, defaults=defaults)
@@ -124,13 +131,13 @@ def scrape_presentation(presentation_id):
 @job
 def scrape_session(session_id):
 
-    pycon = PyCon.objects.get(year=2016)
+    pycon = PyCon.objects.get(year=2017)
 
     url = BASE_URL.format(
-        '/2016/schedule/session/{}/'.format(session_id))
+        '/2017/schedule/session/{}/'.format(session_id))
     resp = requests.get(url)
     parser = etree.HTMLParser()
-    doc = etree.fromstring(resp.text, parser)
+    doc = etree.fromstring(resp.text.encode(encoding='utf-8'), parser)
 
     elems = doc.cssselect('.table a')
     presentations = []

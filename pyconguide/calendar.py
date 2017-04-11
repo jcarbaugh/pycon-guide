@@ -4,7 +4,7 @@ import vobject
 def generate_ical(presentations):
 
     cal = vobject.iCalendar()
-    cal.add('X-WR-CALNAME').value = 'PyCon 2016'
+    cal.add('X-WR-CALNAME').value = 'PyCon 2017'
 
     for presentation in presentations:
 
@@ -19,7 +19,7 @@ def generate_ical(presentations):
         event.add('dtend').value = presentation.end_time
         event.add('location').value = presentation.room or 'TBD'
         event.add('title').value = presentation.url
-        event.add('uid').value = 'pycon:2016:presentation:{}'.format(
+        event.add('uid').value = 'pycon:2017:presentation:{}'.format(
             presentation.presentation_id)
 
     return cal.serialize()

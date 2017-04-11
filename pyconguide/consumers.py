@@ -7,7 +7,7 @@ logger = logging.getLogger('ws')
 
 @channel_session_user_from_http
 def ws_connect(message):
-    pass
+    message.reply_channel.send({"accept": True})
 
 
 @channel_session_user
