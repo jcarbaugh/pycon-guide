@@ -20,7 +20,7 @@ def ws_message(message):
 
         interest = Interest.objects.get(
             user=message.user,
-            presentation__presentation_id=int(presentation_id)
+            presentation__presentation_id=int(presentation_id),
             presentation__pycon__year=settings.PYCON_YEAR)
         interest.delete()
 
