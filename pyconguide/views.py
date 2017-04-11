@@ -22,10 +22,8 @@ class PresentationListView(ListView):
     model = Presentation
     template_name = 'presentation_list.html'
 
-    # def get_queryset(self):
-    #     qs = super(ListView, self).get_queryset()
-    #     qs = qs.filter(end_time__gte=timezone.now())
-    #     return qs
+    def get_queryset(self):
+        return super(ListView, self).get_queryset().filter(year=2017)
 
     def get_context_data(self):
         context = super(PresentationListView, self).get_context_data()
