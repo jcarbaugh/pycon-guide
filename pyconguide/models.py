@@ -62,6 +62,7 @@ class Presentation(models.Model):
 
     class Meta:
         ordering = ('start_time', 'end_time', 'title')
+        unique_together = ('pycon', 'presentation_id')
 
     def __str__(self):
         return self.title

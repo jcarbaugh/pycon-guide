@@ -1,5 +1,5 @@
+from django.conf import settings
 from django.http import HttpResponse
-from django.utils import timezone
 from django.views.generic import View, DetailView, ListView, TemplateView
 from .models import Presentation, Interest, Calendar
 from .calendar import generate_ical
@@ -23,7 +23,9 @@ class PresentationListView(ListView):
     template_name = 'presentation_list.html'
 
     def get_queryset(self):
-        return super(ListView, self).get_queryset().filter(year=2017)
+        qs = super(ListView, self).get_queryset()
+        qs = qs.filter(pycon__year=settings.PYCON_YEAR).select_related('pycon')
+        return qs
 
     def get_context_data(self):
         context = super(PresentationListView, self).get_context_data()
@@ -44,6 +46,6 @@ class CalendarView(DetailView):
     def get(self, request, *args, **kwargs):
         obj = self.get_object()
         presentations = Presentation.objects.filter(
-            interests__user_id=obj.user)
+            interests__user_id=obj.user, pycon__year=settings.PYCON_YEAR)
         content = generate_ical(presentations)
         return HttpResponse(content, content_type='text/calendar')

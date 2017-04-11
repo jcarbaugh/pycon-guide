@@ -1,5 +1,6 @@
 import logging
 from channels.auth import channel_session_user, channel_session_user_from_http
+from django.conf import settings
 from .models import Interest, Presentation
 
 logger = logging.getLogger('ws')
@@ -19,7 +20,8 @@ def ws_message(message):
 
         interest = Interest.objects.get(
             user=message.user,
-            presentation__presentation_id=int(presentation_id))
+            presentation__presentation_id=int(presentation_id)
+            presentation__pycon__year=settings.PYCON_YEAR)
         interest.delete()
 
         resp = {'text': 'success'}
@@ -27,7 +29,8 @@ def ws_message(message):
     elif action == 'interested':
 
         presentation = Presentation.objects.get(
-            presentation_id=int(presentation_id))
+            presentation_id=int(presentation_id),
+            pycon__year=settings.PYCON_YEAR)
         Interest.objects.create(
             user=message.user, presentation=presentation)
 
