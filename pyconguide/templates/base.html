@@ -8,6 +8,7 @@
         <meta name="description" content="Make your own PyCon guide and subscribe to a custom calendar. Made by ISL in Washington, DC.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon-precomposed" href="/favicon-152.png">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
         {# Facebook Open Graph Tags #}
         <meta property="og:title" content="PyCon Guide" />
@@ -26,7 +27,6 @@
         <meta name="twitter:image" content="https://pycon.guide{% static 'img/share-twitter.jpg' %}">
 
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
-
         {% if request.session.session_key %}
         <script>var wsSessionKey = '{{ request.session.session_key }}';</script>
         {% endif %}
