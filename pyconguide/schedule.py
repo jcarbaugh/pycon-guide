@@ -13,6 +13,7 @@ from .models import Presentation, PyCon
 BASE_URL = 'https://us.pycon.org{}'
 SCHEDULE_URL = BASE_URL.format('/2017/schedule/talks/')
 PRESENTATION_RE = re.compile(r'(/2017/schedule/presentation/(\d+)/)')
+SESSION_RE = re.compile(r'(/2017/schedule/session/(\d+)/)')
 DATES = {
     'Friday': datetime.date(2017, 5, 19),
     'Saturday': datetime.date(2017, 5, 20),
@@ -55,20 +56,23 @@ def scrape_pycon():
 
     for presentation_id in presentation_ids:
         # scrape_presentation.delay(presentation_id)
-        scrape_presentation(presentation_id)
+        try:
+            scrape_presentation(presentation_id)
+        except etree.XMLSyntaxError:
+            print(f'!!! Unable to parse presentation {presentation_id}')
+
 
     # collect session_id
 
-    parser = etree.HTMLParser()
-    doc = etree.fromstring(resp.text.encode(encoding='utf-8'), parser)
-    elems = doc.cssselect('div.badges a[href]')
-    session_ids = []
-    for elem in elems:
-        session_ids.append(elem.attrib['href'][-4:-1])
+    matchiter = SESSION_RE.finditer(resp.text)
+    session_ids = sorted(set(int(m.groups()[1]) for m in matchiter))
 
     for session_id in session_ids:
         #scrape_session.delay(session_id)
-        scrape_session(session_id)
+        try:
+            scrape_session(session_id)
+        except etree.XMLSyntaxError:
+            print(f'!!! Unable to parse session {session_id}')
 
 
 @job
@@ -77,7 +81,7 @@ def scrape_presentation(presentation_id):
     url = BASE_URL.format(
         '/2017/schedule/presentation/{}/'.format(presentation_id))
 
-    print(f'scraping {url}')
+    print(f'scraping presentation {url}')
 
     defaults = {
         'pycon': PyCon.objects.get(year=2017),
@@ -89,7 +93,7 @@ def scrape_presentation(presentation_id):
     resp = requests.get(url)
     parser = etree.HTMLParser()
 
-    doc = etree.fromstring(resp.text.encode(encoding='utf-8'), parser)
+    doc = etree.fromstring(resp.text, parser)
 
     elems = doc.cssselect('.box-content h2')
     defaults['title'] = elems[0].text.strip()
@@ -135,9 +139,12 @@ def scrape_session(session_id):
 
     url = BASE_URL.format(
         '/2017/schedule/session/{}/'.format(session_id))
+
+    print(f'scraping session {url}')
+
     resp = requests.get(url)
     parser = etree.HTMLParser()
-    doc = etree.fromstring(resp.text.encode(encoding='utf-8'), parser)
+    doc = etree.fromstring(resp.text, parser)
 
     elems = doc.cssselect('.table a')
     presentations = []
