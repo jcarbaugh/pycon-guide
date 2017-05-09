@@ -9,7 +9,8 @@ Built with [mo-django](https://github.com/istrategylabs/mo-django), [ISL's](http
 
 ### Requirements
 
-* Python 3
+* Python 3.6+
+* node
 * [foreman](http://ddollar.github.io/foreman/)
 
 ### Python and Django
@@ -51,7 +52,21 @@ npm install
 Do an initial build of assets:
 
 ```
-gulp build
+npm run build
+```
+
+## Load Data
+
+Before running the project, PyCon Guide has to know about... PyCon. Create the current PyCon with the `createpycon` command:
+
+```
+foreman run python manage.py createpycon
+```
+
+Then run `refreshschedule` to scrape the PyCon schedule pages:
+
+```
+foreman run python manage.py refreshschedule
 ```
 
 
@@ -103,13 +118,15 @@ You are **highly encouraged** to do this before finishing features to make sure 
 
 ### Set Environment Variables
 
-| Environment Variable | Description |
-|----------------------|-------------|
-| DEBUG | `True` in development, `False` otherwise |
-| SECRET_KEY | Set this to a different value in every environment |
-| ALLOWED_HOSTS | comma separated list of allowed domains |
-| DATABASE_URL | database config URI |
-| SSLIFY_DISABLE | disables SSL check when `True` |
+| Environment Variable      | Description                                       |
+| ------------------------- | --------------------------------------------------|
+| DEBUG                     | `True` in development, `False` otherwise          |
+| SECRET_KEY                | Set this to a different value in every environment|
+| ALLOWED_HOSTS             | comma separated list of allowed domains           |
+| DATABASE_URL              | database config URI                               |
+| SSLIFY_DISABLE            | disables SSL check when `True`                    |
+| SOCIAL_AUTH_GITHUB_KEY    | key for GitHub social auth                        |
+| SOCIAL_AUTH_GITHUB_SECRET | secret key for GitHub social auth                 |
 
 
 ## Deploying on Heroku
