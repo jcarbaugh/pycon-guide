@@ -1,49 +1,32 @@
-.link {
-    text-decoration: none;
-}
+.footer__wrapper {
+    background-color: $black;
+    display: flex;
+    justify-content: center;
 
-.link--footer {
-    color: $floralwhite;
-    font-family: adelle;
-    font-size: 1.4em;
-    position: relative;
-    margin-top: 5em;
-    text-decoration-color: $floralwhite;
 
-    &:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 1.5px;
-            width: 0;
-            background-color: $tiber;
-            transition: 150ms all ease-in-out;
+    .footer {
+        padding: 3em 0;
+        width: 100%;
     }
 
-    &:hover {
+    .footer__item {
+        text-align: center;
+        align-self: center;
+        color: $floralwhite;
+        font-size: rem-calc(14);
 
-        &:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 1.5px;
-            width: 100%;
-            background-color: $tiber;
-            transition: 150ms all ease-in-out;
+        a:link, a:visited {
+            color: $floralwhite;
+            text-decoration: none;
+            outline: 0;
+        }
+
+        .link--footer:hover {
+            text-decoration: underline;
         }
     }
 }
 
-.html--app {
-    .link--footer {
-        margin-top: 2em;
-    }
-}
-
-@include breakpoint(small only) {
-    .link--footer {
-        margin-top: 7em;
-    }
+.isl-logo {
+    height: 4.5em;
 }
